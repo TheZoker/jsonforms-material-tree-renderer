@@ -115,7 +115,7 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                         subheader={<ListSubheader component="div">Missing controls</ListSubheader>}>
                         <ListItem
                             button
-                            key='test'
+                            key='temp'
                         >
                             <ListItemText primary='text' />
                         </ListItem>
