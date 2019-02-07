@@ -120,7 +120,8 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                             <ListItemText primary='text' />
                         </ListItem>
                     </List>
-                    <List>
+                    <List
+                        subheader={<ListSubheader component="div">New item</ListSubheader>}>
                         {
                             containerProperties
                                 .map((prop, index) => {

@@ -216,6 +216,7 @@ class ObjectListItem extends React.Component
                       className={classes.actionButton}
                       aria-label='Add'
                       disableRipple
+                      disabled
                       onClick={handlers.onAdd(schema, path)}
                     >
                       <AddIcon />
@@ -228,6 +229,7 @@ class ObjectListItem extends React.Component
                   className={classes.actionButton}
                   aria-label='Remove'
                   disableRipple
+                  disabled
                   onClick={handlers.onRemove}
                 >
                   <DeleteIcon />
