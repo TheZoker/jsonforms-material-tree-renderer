@@ -1,0 +1,9 @@
+.icon.user {
+  background-image: url('./User.png');
+}
+.icon.userGroup {
+  background-image: url('./UserGroup.png');
+}
+.icon.task {
+  background-image: url('./Task.png');
+}
