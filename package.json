@@ -18,6 +18,7 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "prepare": "tsc",
+    "postinstall": "tsc",
     "build": "tsc",
     "clean": "rm -rf lib coverage dist .nyc_output 2> /dev/null",
     "lint": "tslint --project tsconfig.json",
