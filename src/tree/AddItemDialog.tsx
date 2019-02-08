@@ -93,6 +93,48 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
         closeDialog();
     };
 
+    addMissingControl = (newPath: string) => {
+        const { add, closeDialog, defaultData, path, rootData, setSelection } = this.props;
+        const prop: Property = {
+            label: 'Test',
+            property: 'test',
+            schemaPath: newPath,
+            schema: {
+                'type': 'object',
+                '$id': '#control',
+                'properties': {
+                    'type': {
+                    'type': 'string',
+                    'const': 'Control',
+                    'default': 'Control'
+                    },
+                    'label': {
+                    'type': 'string'
+                    },
+                    'scope': {
+                    '$ref': '#/definitions/scope'
+                    },
+                    'options': {
+                    '$ref': '#/definitions/options'
+                    },
+                    'rule': {
+                    '$ref': '#/definitions/rule'
+                    }
+                } 
+            }
+        }
+        const newData = createData(defaultData, prop);
+
+        const arrayPath = Paths.compose(path, prop.property);
+        const array = Resolve.data(rootData, arrayPath) as any[];
+        const selectionIndex = isEmpty(array) ? 0 : array.length;
+        const selectionPath = Paths.compose(arrayPath, selectionIndex.toString());
+
+        add(path, prop, newData);
+        setSelection(prop.schema, newData, selectionPath)();
+        closeDialog();
+    };
+
     render() {
         const {
             closeDialog,
@@ -116,6 +158,7 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                         <ListItem
                             button
                             key='temp'
+                            onClick={() => this.addMissingControl('#/properties/birthDay')}
                         >
                             <ListItemText primary='text' />
                         </ListItem>
