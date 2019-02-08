@@ -80,6 +80,7 @@ const createPropLabel =
 class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
 
     onClick = (prop: Property) => {
+        console.log(prop);
         const { add, closeDialog, defaultData, path, rootData, setSelection } = this.props;
         const newData = createData(defaultData, prop);
 
@@ -93,12 +94,13 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
         closeDialog();
     };
 
-    addMissingControl = (newPath: string) => {
-        const { add, closeDialog, defaultData, path, rootData, setSelection } = this.props;
+    addMissingControl = (scope: string, label: string) => {
+        console.log(scope);
+        const { add, closeDialog, path, rootData, setSelection } = this.props;
         const prop: Property = {
-            label: 'Test',
-            property: 'test',
-            schemaPath: newPath,
+            label: 'control',
+            property: 'elements',
+            schemaPath: 'properties.elements.items.anyOf.0',
             schema: {
                 'type': 'object',
                 '$id': '#control',
@@ -123,7 +125,12 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                 } 
             }
         }
-        const newData = createData(defaultData, prop);
+        const newData = {
+            type: "Control",
+            scope,
+            label
+        }
+        console.log(newData);
 
         const arrayPath = Paths.compose(path, prop.property);
         const array = Resolve.data(rootData, arrayPath) as any[];
@@ -157,10 +164,17 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                         subheader={<ListSubheader component="div">Missing controls</ListSubheader>}>
                         <ListItem
                             button
-                            key='temp'
-                            onClick={() => this.addMissingControl('#/properties/birthDay')}
+                            key='birthDay'
+                            onClick={() => this.addMissingControl('#/properties/birthDay', "Birthday")}
                         >
-                            <ListItemText primary='text' />
+                            <ListItemText primary='birthDay' />
+                        </ListItem>
+                        <ListItem
+                            button
+                            key='age'
+                            onClick={() => this.addMissingControl('#/properties/age', "Age")}
+                        >
+                            <ListItemText primary='age' />
                         </ListItem>
                     </List>
                     <List
@@ -198,11 +212,22 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
 // TODO
 const mapStateToProps = (state: JsonFormsState, ownProps: any) => {
     const containerProperties = findContainerProperties(ownProps.schema, getSchema(state) as JsonSchema7, false);
+    const missingControls = [
+        {
+            path: "#/properties/birthDay",
+            label: "Birthday"
+        },
+        {
+            path: "#/properties/age",
+            label: "Age"
+        },
+    ]
 
     return {
         rootData: getData(state),
         defaultData: getDefaultData(state),
         containerProperties,
+        missingControls,
         rootSchema: getSchema(state),
         path: ownProps.path,
         schema: ownProps.schema,
