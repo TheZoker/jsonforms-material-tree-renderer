@@ -26,8 +26,6 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ListItemIcon } from '@material-ui/core';
-import { wrapImageIfNecessary } from '../helpers/image-provider.util';
 import { SchemaLabelProvider } from '../helpers/LabelProvider';
 import { AnyAction, Dispatch } from 'redux';
 
@@ -150,7 +148,6 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
              * Self contained schemas of the corresponding schema
              */
             containerProperties,
-            imageProvider,
             labelProvider,
         } = this.props;
 
@@ -164,17 +161,31 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                         subheader={<ListSubheader component="div">Missing controls</ListSubheader>}>
                         <ListItem
                             button
-                            key='birthDay'
-                            onClick={() => this.addMissingControl('#/properties/birthDay', "Birthday")}
+                            key='creditCardName'
+                            onClick={() => this.addMissingControl('#/properties/creditCard/properties/creditCardName', "Credit Card Name")}
                         >
-                            <ListItemText primary='birthDay' />
+                            <ListItemText primary='creditCardName' />
                         </ListItem>
                         <ListItem
                             button
-                            key='age'
-                            onClick={() => this.addMissingControl('#/properties/age', "Age")}
+                            key='creditCardNumber'
+                            onClick={() => this.addMissingControl('#/properties/creditCard/properties/creditCardNumber', "Credit Card Number")}
                         >
-                            <ListItemText primary='age' />
+                            <ListItemText primary='creditCardNumber' />
+                        </ListItem>
+                        <ListItem
+                            button
+                            key='creditCardCCV'
+                            onClick={() => this.addMissingControl('#/properties/creditCard/properties/creditCardCCV', "Credit Card CCV")}
+                        >
+                            <ListItemText primary='creditCardCCV' />
+                        </ListItem>
+                        <ListItem
+                            button
+                            key='creditCardExpire'
+                            onClick={() => this.addMissingControl('#/properties/creditCard/properties/creditCardExpire', "Credit Card Expiration Date")}
+                        >
+                            <ListItemText primary='creditCardExpire' />
                         </ListItem>
                     </List>
                     <List
@@ -189,9 +200,6 @@ class AddItemDialog extends React.Component<AddItemDialogProps, {}> {
                                             key={`${findPropertyLabel(prop)}-button-${index}`}
                                             onClick={() => this.onClick(prop)}
                                         >
-                                            <ListItemIcon>
-                                                {wrapImageIfNecessary(imageProvider(prop.schema))}
-                                            </ListItemIcon>
                                             <ListItemText primary={label} />
                                         </ListItem>
                                     );
