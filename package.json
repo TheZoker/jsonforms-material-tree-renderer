@@ -18,7 +18,7 @@
   "typings": "./lib/index.d.ts",
   "scripts": {
     "prepare": "yarn run build",
-    "build": "tsc",
+    "build": "tsc --skipLibCheck",
     "clean": "rm -rf lib coverage dist .nyc_output 2> /dev/null",
     "lint": "tslint --project tsconfig.json",
     "test": "jest --no-cache",
